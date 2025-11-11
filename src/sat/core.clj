@@ -91,6 +91,15 @@
             (each-number-once-per-box)
             (map vector known)))))
 
+(defn solve-all [known]
+  (->> (sat/solutions-symbolic-cnf
+        (concat (one-number-per-square)
+                (each-number-once-per-row)
+                (each-number-once-per-column)
+                (each-number-once-per-box)
+                (map vector known)))
+       (map #(filter sat/positive? %))))
+
 (def puzzle1
   [{:r 0 :c 1 :x 6}
    {:r 2 :c 0 :x 4}
